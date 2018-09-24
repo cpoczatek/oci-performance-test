@@ -10,14 +10,12 @@ wget -O ~/jdk8.rpm -N --no-check-certificate --no-cookies --header "Cookie: orac
 yum -y localinstall ~/jdk8.rpm
 
 # DataStax
-echo "
-[datastax]
-name = DataStax Repo for DataStax Enterprise
-baseurl=https://datastax@oracle.com:*9En9HH4j^p4@rpm.datastax.com/enterprise
+echo "[datastax]
+name = DataStax Repository
+baseurl=https://datastax%40oracle.com:*9En9HH4j^p4@rpm.datastax.com/enterprise
 enabled=1
-gpgcheck=0
-" > /etc/yum.repos.d/datastax.repo
-yum install dse-full-4.8.15-1
+gpgcheck=0" > /etc/yum.repos.d/datastax.repo
+yum -y install dse-full-4.8.15-1
 
 # Grab the test scripts and drop them in /
 curl -O https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/test.cql
