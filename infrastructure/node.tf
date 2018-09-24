@@ -24,4 +24,4 @@ data "oci_core_vnic" "datastax_node_vnic" {
   vnic_id = "${lookup(data.oci_core_vnic_attachments.datastax_node_vnic_attachments.vnic_attachments[0],"vnic_id")}"
 }
 
-output "SSH" { value = "ssh -i ~/.ssh/oci oel@${data.oci_core_vnic.datastax_node_vnic.public_ip_address}" }
+output "SSH" { value = "ssh -i ~/.ssh/oci opc@${data.oci_core_vnic.datastax_node_vnic.public_ip_address}" }

@@ -19,5 +19,5 @@ gpgcheck=0
 yum install dse-full-4.8.15-1
 
 # Grab the test scripts and drop them in /
-curl https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/test.cql
-curl https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/writefile.py
+curl -O https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/test.cql
+curl -O https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/writefile.py
