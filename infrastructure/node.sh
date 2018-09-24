@@ -20,4 +20,3 @@ service dse start
 
 # Test
 curl -O https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/runtest.sh
-./runtest.sh
