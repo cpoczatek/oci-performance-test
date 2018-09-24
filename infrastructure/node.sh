@@ -16,7 +16,4 @@ baseurl=https://datastax%40oracle.com:*9En9HH4j^p4@rpm.datastax.com/enterprise
 enabled=1
 gpgcheck=0" > /etc/yum.repos.d/datastax.repo
 yum -y install dse-full-4.8.15-1
-
-# Grab the test scripts and drop them in /
-curl -O https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/test.cql
-curl -O https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/writefile.py
+service dse start
