@@ -20,9 +20,9 @@ Typically tests like this use [cassandra-stress](https://docs.datastax.com/en/ca
 
 Our results are:
 
-| Shape         | Read - Rows/s | Write - Rows/s |
-|---------------|---------------|----------------|
-| DenseIO1.8    | 91750         | 5386           |
-| DenseIO1.16   | 92569         | 28943          |
-| DenseIO2.8    | 85531         | 22711          |
-| DenseIO2.16   | 99187,98966   | 48953, 44019   |
+| Shape         | Write - Rows/s | Read - Rows/s |
+|---------------|----------------|---------------|
+| DenseIO1.8    | 91750          | 5386          |
+| DenseIO1.16   | 92569          | 28943         |
+| DenseIO2.8    | 85531          | 22711         |
+| DenseIO2.16   | 99187,98966    | 48953, 44019  |
