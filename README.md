@@ -18,9 +18,9 @@ This test is a bit unrepresentative in that it's a single node.
 
 Our results are:
 
-| Shape         | Read - Seconds | Read - Rows/s | Write - Seconds | Write - Rows/s |
-|---------------|----------------|---------------|-----------------|----------------|
-| DenseIO1.8    | 32.697         | 9175          | 55.695          | 5386
-| DenseIO1.16   | 123     |
+| Shape         | Read - Rows/s | Write - Rows/s |
+|---------------|---------------|----------------|
+| DenseIO1.8    | 91750         | 5386           |
+| DenseIO1.16   | 92569         | 28943          |
 | DenseIO2.8    | 123     |
 | DenseIO2.16   | 123     |

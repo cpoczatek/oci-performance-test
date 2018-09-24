@@ -10,8 +10,8 @@ variable "ssh_public_key" {}
 
 variable "shape" {
   #default = "VM.DenseIO1.8"
-  default = "VM.DenseIO1.16"
-  #default = "VM.DenseIO2.8"
+  #default = "VM.DenseIO1.16"
+  default = "VM.DenseIO2.8"
   #default = "VM.DenseIO2.16"
 }
 
