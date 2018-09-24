@@ -17,5 +17,5 @@ CREATE TABLE testks.faketable (
     AND speculative_retry = '99.0PERCENTILE';
 
 use testks;
-copy faketable(id) from '/tmp/test.txt';
-copy faketable(id) to 'data.out';
+copy faketable(id) from '~/test/data.in';
+copy faketable(id) to '~/test/data.out';
