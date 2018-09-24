@@ -17,3 +17,7 @@ enabled=1
 gpgcheck=0
 " > /etc/yum.repos.d/datastax.repo
 yum install dse-full-4.8.15-1
+
+# Grab the test scripts and drop them in /
+curl https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/test.cql
+curl https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/writefile.py
