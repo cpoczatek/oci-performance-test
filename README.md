@@ -10,7 +10,7 @@ We have Python and CQL scripts.  I'm running those on a single node cluster of t
 | Java          | Oracle jdk-8u152              |
 | DataStax      | DSE 4.8.15-1                  |
 
-Our results are:hav
+Our results are:
 
 | Shape         | Rows/s        |
 |---------------|---------------|
