@@ -16,6 +16,8 @@ This version of DSE is also extremely old.  Newer versions have far better perfo
 
 This test is a bit unrepresentative in that it's a single node.
 
+Typically tests like this use [cassandra-stress](https://docs.datastax.com/en/cassandra/2.1/cassandra/tools/toolsCStress_t.html), not copy.  This performance is unlikely to be indicative of more typical CQL workloads.
+
 Our results are:
 
 | Shape         | Read - Rows/s | Write - Rows/s |
