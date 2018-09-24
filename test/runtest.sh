@@ -8,4 +8,4 @@ curl -O https://raw.githubusercontent.com/benofben/oci-performance-test/master/t
 python writefile.py
 
 curl -O https://raw.githubusercontent.com/benofben/oci-performance-test/master/test/test.cql
-cat test.cql > cqlsh localhost
+cat test.cql | cqlsh localhost
