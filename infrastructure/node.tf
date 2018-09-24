@@ -2,7 +2,7 @@ resource "oci_core_instance" "datastax_node" {
   display_name        = "datastax_node"
   compartment_id      = "${var.tenancy_ocid}"
   availability_domain = "${lookup(data.oci_identity_availability_domains.availability_domains.availability_domains[0],"name")}"
-  shape               = "${var.couchbase_server["shape"]}"
+  shape               = "${var.shape}"
   subnet_id           = "${oci_core_subnet.subnet.id}"
   source_details {
     source_id = "${var.images[var.region]}"
