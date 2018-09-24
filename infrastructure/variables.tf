@@ -8,10 +8,12 @@ variable "region" {}
 # Key used to SSH to OCI VMs
 variable "ssh_public_key" {}
 
-shape = "DenseIO1.8"
-#shape = "DenseIO1.16"
-#shape = "DenseIO2.8"
-#shape = "DenseIO2.16"
+variable "shape" {
+  default = "DenseIO1.8"
+  #default = "DenseIO1.16"
+  #default = "DenseIO2.8"
+  #default = "DenseIO2.16"
+}
 
 // https://docs.cloud.oracle.com/iaas/images/image/cf34ce27-e82d-4c1a-93e6-e55103f90164/
 // Oracle-Linux-7.5-2018.08.14-0
