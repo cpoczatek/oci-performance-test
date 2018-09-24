@@ -12,9 +12,9 @@ We have Python and CQL scripts.  I'm running those on a single node cluster of t
 
 Our results are:
 
-| Shape         | Rows/s        |
-|---------------|---------------|
-| DenseIO1.8    | 123           |
-| DenseIO1.16   | 123           |
-| DenseIO2.8    | 123           |
-| DenseIO2.16   | 123           |
+| Shape         | Read - Seconds | Read - Rows/s | Write - Seconds | Write - Rows/s |
+|---------------|----------------|---------------|-----------------|----------------|
+| DenseIO1.8    | 32.697         | 9175          | 55.695          | 5386
+| DenseIO1.16   | 123     |
+| DenseIO2.8    | 123     |
+| DenseIO2.16   | 123     |

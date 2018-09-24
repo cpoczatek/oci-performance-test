@@ -18,4 +18,4 @@ CREATE TABLE testks.faketable (
 
 use testks;
 copy faketable(id) from '~/test/data.out';
-copy faketable(id) to '~/test/data.out';
+copy faketable(id) to 'data.out';
