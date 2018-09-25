@@ -29,4 +29,6 @@ Typically tests like this use [cassandra-stress](https://docs.datastax.com/en/ca
 
 ### Analysis
 
-To do
+This isn't a great test.  Because of the short time frame, the results don't stabilize.  Additionally, it's not a representative workload.  We'd strongly suggest building some acceptance criteria based on cassandra-stress and working from there.
+
+It's possible the JDK version is influencing results.  Everything else seems to be the same.
