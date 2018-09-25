@@ -18,11 +18,15 @@ This test is a bit unrepresentative in that it's a single node.  Typical cluster
 
 Typically tests like this use [cassandra-stress](https://docs.datastax.com/en/cassandra/2.1/cassandra/tools/toolsCStress_t.html), not copy.  This performance is unlikely to be indicative of more typical CQL workloads.  I recall a DataStax engineer at one point saying he wouldn't trust a benchmark that was run for less than 24 hours.
 
-Our results are:
+### Results
 
-| Shape         | Write - Rows/s | Read - Rows/s |
-|---------------|----------------|---------------|
-| DenseIO1.8    | 91750          | 5386          |
-| DenseIO1.16   | 92569          | 28943         |
-| DenseIO2.8    | 85531          | 22711         |
-| DenseIO2.16   | 99187,98966    | 48953, 44019  |
+| Shape         | Write - Rows/s        | Read - Rows/s       |
+|---------------|-----------------------|---------------------|
+| DenseIO1.8    | 91750, 87833, 94438   | 53860, 61656, 54321 |
+| DenseIO1.16   | 92569                 | 28943               |
+| DenseIO2.8    | 85531                 | 22711               |
+| DenseIO2.16   | 99187,98966           | 48953, 44019        |
+
+### Analysis
+
+The results are reasonably stable.  We were not able to replicate the poor performance observed previously.
