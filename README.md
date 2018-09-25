@@ -18,6 +18,16 @@ This test is a bit unrepresentative in that it's a single node.  Typical cluster
 
 Typically tests like this use [cassandra-stress](https://docs.datastax.com/en/cassandra/2.1/cassandra/tools/toolsCStress_t.html), not copy.  This performance is unlikely to be indicative of more typical CQL workloads.  I recall a DataStax engineer at one point saying he wouldn't trust a benchmark that was run for less than 24 hours.
 
+To run the test:
+
+    terraform init
+    terraform apply
+
+Then SSH to the machine and run
+
+    cd /
+    ./runtest.sh
+    
 ### Results
 
 | Shape         | Write - Rows/s        | Read - Rows/s       |
