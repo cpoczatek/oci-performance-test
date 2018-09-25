@@ -4,12 +4,6 @@ echo "Running node.sh"
 
 # Java
 echo "Installing Oracle Java 8 JDK"
-# The old 152 JDK seems to have been removed from the download site.  We're using a newer one instead.
-#wget -O ~/jdk8.rpm -N --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u152-b16/96a7b8442fe848ef90c96a2fad6ed6d1/jre-8u152-linux-x64.rpm
-
-# Huh, looks like the tar.gz is still available.  Could retry with that.
-#http://download.oracle.com/otn/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/server-jre-8u152-linux-x64.tar.gz
-
 wget -O ~/jdk8.rpm -N --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.rpm
 yum -y localinstall ~/jdk8.rpm
 

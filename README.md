@@ -1,7 +1,7 @@
 # oci-performance-test
 
 ## September 24, 2018
-We have Python and CQL scripts.  I'm running those on a single node cluster of the following shapes.  This is using:
+I'm running the Python and CQL on a single node cluster of the following shapes.  This is using:
 
 | Variable      | Value                         |
 |---------------|-------------------------------|
@@ -23,7 +23,7 @@ To run the test:
     terraform init
     terraform apply
 
-Then SSH to the machine and run:
+Then SSH to the machine using the value from the Terraform output and run:
 
     cd /
     sudo su
@@ -31,14 +31,16 @@ Then SSH to the machine and run:
 
 ### Results
 
-| Shape         | Write - Rows/s        | Read - Rows/s       |
-|---------------|-----------------------|---------------------|
-| DenseIO1.8    | 91750, 87833, 94438   | 53860, 61656, 54321 |
-| DenseIO1.16   | 98965, 98969, 99622   | 59546, 54565, 50383 |
-| DenseIO2.8    |                       |                     |
-| DenseIO2.16   | 99187, 98966          | 48953, 44019        |
+| Shape         | Write - Rows/s      | Read - Rows/s       |
+|---------------|---------------------|---------------------|
+| DenseIO1.8    | 91750, 87833, 94438 | 53860, 61656, 54321 |
+| DenseIO1.16   | 98965, 98969, 99622 | 59546, 54565, 50383 |
+| DenseIO2.8    | 84025, 90316, 90995 | 22636, 20679, 19295 |
+| DenseIO2.16   | 98493, 99291, 99286 | 49216, 44196, 40638 |
 
 ### Analysis
+
+Write seems to perform the same regardless of hardware.  Reads are the same for generation 1 and the same for generation 2.  It's fascinating that the read performance on the 8 core is 1-2 to 1/3 on generation 2 of what it was on generation 1. For the 16 core the performance difference on reads seems less pronounced across generations.
 
 This isn't a great test.  Because of the short time frame, the results don't stabilize.  Additionally, it's not a representative workload.  We'd strongly suggest building some acceptance criteria based on cassandra-stress and working from there.
 
