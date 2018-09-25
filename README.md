@@ -35,7 +35,7 @@ Then SSH to the machine and run:
 |---------------|-----------------------|---------------------|
 | DenseIO1.8    | 91750, 87833, 94438   | 53860, 61656, 54321 |
 | DenseIO1.16   | 98965, 98969, 99622   | 59546, 54565, 50383 |
-| DenseIO2.8    |                       |                |
+| DenseIO2.8    |                       |                     |
 | DenseIO2.16   | 99187, 98966          | 48953, 44019        |
 
 ### Analysis
@@ -45,3 +45,6 @@ This isn't a great test.  Because of the short time frame, the results don't sta
 It's possible the JDK version is influencing results.  Everything else seems to be the same.
 
 I don't believe this is actually stressing the hardware in any meaningful way, rather we're bottlenecking on some part of the system that is uncharacteristic of real load.  This is clear because of the similar performance observed on different hardware.
+
+### Next Steps
+I'd suggest we identify a representative cassandra-stress load and tune for that.  We'd want to identify acceptance criteria, for instance throughput and latency targets.  Alternatively, we could try to build a test harness for a real world workload.
