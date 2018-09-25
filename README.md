@@ -23,9 +23,10 @@ To run the test:
     terraform init
     terraform apply
 
-Then SSH to the machine and run
+Then SSH to the machine and run:
 
     cd /
+    sudo su
     ./runtest.sh
 
 ### Results
@@ -33,8 +34,8 @@ Then SSH to the machine and run
 | Shape         | Write - Rows/s        | Read - Rows/s       |
 |---------------|-----------------------|---------------------|
 | DenseIO1.8    | 91750, 87833, 94438   | 53860, 61656, 54321 |
-| DenseIO1.16   | 98965          | 59546        |
-| DenseIO2.8    |                  |                |
+| DenseIO1.16   | 98965, 98969, 99622   | 59546, 54565, 50383 |
+| DenseIO2.8    |                       |                |
 | DenseIO2.16   | 99187, 98966          | 48953, 44019        |
 
 ### Analysis
@@ -42,3 +43,5 @@ Then SSH to the machine and run
 This isn't a great test.  Because of the short time frame, the results don't stabilize.  Additionally, it's not a representative workload.  We'd strongly suggest building some acceptance criteria based on cassandra-stress and working from there.
 
 It's possible the JDK version is influencing results.  Everything else seems to be the same.
+
+I don't believe this is actually stressing the hardware in any meaningful way, rather we're bottlenecking on some part of the system that is uncharacteristic of real load.  This is clear because of the similar performance observed on different hardware.
