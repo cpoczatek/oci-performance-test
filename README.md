@@ -27,15 +27,15 @@ Then SSH to the machine and run
 
     cd /
     ./runtest.sh
-    
+
 ### Results
 
 | Shape         | Write - Rows/s        | Read - Rows/s       |
 |---------------|-----------------------|---------------------|
 | DenseIO1.8    | 91750, 87833, 94438   | 53860, 61656, 54321 |
-| DenseIO1.16   | 92569                 | 28943               |
-| DenseIO2.8    | 85531                 | 22711               |
-| DenseIO2.16   | 99187,98966           | 48953, 44019        |
+| DenseIO1.16   | 98965          | 59546        |
+| DenseIO2.8    |                  |                |
+| DenseIO2.16   | 99187, 98966          | 48953, 44019        |
 
 ### Analysis
 
