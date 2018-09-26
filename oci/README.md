@@ -1,4 +1,4 @@
-# oci-performance-test
+# oci
 
 ## September 24, 2018
 I'm running the Python and CQL on a single node cluster of the following shapes.  This is using:
