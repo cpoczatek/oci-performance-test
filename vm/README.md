@@ -14,7 +14,7 @@ This test is a VirtualBox image running on my laptop.
 * VDI
 * Dynamically Allocated
 
-For a second test, I changed the core count to 4.
+For a second test, I changed the core count to 2.
 
 ## Oracle Linux
 * https://www.oracle.com/technetwork/server-storage/linux/downloads/index.html
