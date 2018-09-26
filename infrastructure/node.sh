@@ -61,6 +61,9 @@ else
 	echo -e "DONE - $nvcount NVME disks processed, $bvcount Block Volumes processed."
 fi
 
+# The drive is at /data0
+# There may be more drives, but we're just going to use that one for now.
+
 #######################################################
 ######################### Java ########################
 #######################################################
@@ -68,13 +71,26 @@ echo "Installing Oracle Java 8 JDK"
 wget -O ~/jdk8.rpm -N --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.rpm
 yum -y localinstall ~/jdk8.rpm
 
-# DataStax
+#######################################################
+####################### DataStax ######################
+#######################################################
 echo "[datastax]
 name = DataStax Repository
 baseurl=https://datastax%40oracle.com:*9En9HH4j^p4@rpm.datastax.com/enterprise
 enabled=1
 gpgcheck=0" > /etc/yum.repos.d/datastax.repo
 yum -y install dse-full-4.8.15-1
+
+# Need to configure the data and commitlog directories
+mkdir -p /data0/cassandra/data
+chown -r cassandra /data0/cassandra/data
+chgrp -r cassandra /data0/cassandra/data
+sed -i -e 's|/var/lib/cassandra/data|/data0/cassandra/data|g' /etc/dse/cassandra/cassandra.yaml
+
+mkdir -p /data0/cassandra/commitlog
+chown -r cassandra /data0/cassandra/commitlog
+chgrp -r cassandra /data0/cassandra/commitlog
+sed -i -e 's|/var/lib/cassandra/commitlog|/data0/cassandra/commitlog|g' /etc/dse/cassandra/cassandra.yaml
 
 service dse start
 
