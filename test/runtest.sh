@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd /
+cd /data0
 mkdir test
 cd test
 

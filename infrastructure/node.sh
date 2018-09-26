@@ -83,13 +83,13 @@ yum -y install dse-full-4.8.15-1
 
 # Need to configure the data and commitlog directories
 mkdir -p /data0/cassandra/data
-chown -r cassandra /data0/cassandra/data
-chgrp -r cassandra /data0/cassandra/data
+chown -R cassandra /data0/cassandra/data
+chgrp -R cassandra /data0/cassandra/data
 sed -i -e 's|/var/lib/cassandra/data|/data0/cassandra/data|g' /etc/dse/cassandra/cassandra.yaml
 
 mkdir -p /data0/cassandra/commitlog
-chown -r cassandra /data0/cassandra/commitlog
-chgrp -r cassandra /data0/cassandra/commitlog
+chown -R cassandra /data0/cassandra/commitlog
+chgrp -R cassandra /data0/cassandra/commitlog
 sed -i -e 's|/var/lib/cassandra/commitlog|/data0/cassandra/commitlog|g' /etc/dse/cassandra/cassandra.yaml
 
 service dse start
