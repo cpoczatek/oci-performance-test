@@ -1,14 +1,5 @@
 #!/bin/bash
-##
-## Set the following variable to "1" to enable data tiering.
-enable_data_tiering="0"
-worker_check=`hostname | grep worker`
-worker_chk=`echo -e $?`
-if [ "$worker_chk" = 0 ]; then
-	is_worker="true"
-else
-	is_worker="false"
-fi
+
 ## Give ISCSI time to intiate
 iscsi="1"
 while [ $iscsi = "1" ]; do
@@ -31,33 +22,11 @@ data_mount () {
 	echo "UUID=$UUID   /data$dcount    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
 }
 
-data_tiering () {
-	nvme_check=`echo $disk | grep nvme`
-	nvme_chk=`echo -e $?`
-	if [ "$nvme_chk" = 0 ]; then
-		if [ "$dcount" = 0 ]; then
-			echo -ne "[DISK]/data$dcount/dfs/dn" >> hdfs_data_tiering.txt
-		else
-			echo -ne ",[DISK]/data$dcount/dfs/dn" >> hdfs_data_tiering.txt
-		fi
-	else
-		if [ "$dcount" = 0 ]; then
-			echo -ne "[ARCHIVE]/data$dcount/dfs/dn" >> hdfs_data_tiering.txt
-		else
-			echo -ne ",[ARCHIVE]/data$dcount/dfs/dn" >> hdfs_data_tiering.txt
-		fi
-	fi
-}
-
-## Break out of this script if node is not a worker - this allows for Master tier Block Volumes not dedicated to HDFS use
-if [ ${is_worker} = "false" ]; then
-	exit
-fi
-
 ## Check for x>0 devices
 echo -n "Checking for disks..."
 nvcount="0"
 bvcount="0"
+
 ## Execute - will format all devices except sda for use as data disks in HDFS
 dcount=0
 for disk in `sudo cat /proc/partitions | grep -iv sda | sed 1,2d | gawk '{print $4}'`; do
