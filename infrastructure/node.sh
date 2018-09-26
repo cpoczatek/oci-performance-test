@@ -7,19 +7,6 @@ echo "Running node.sh"
 #######################################################
 echo "Formatting the drives..."
 
-## Give ISCSI time to intiate
-iscsi="1"
-while [ $iscsi = "1" ]; do
-	if [ -f /tmp/iscsi.lock ]; then
-		iscsi="1"
-		sleep 1
-	else
-		## Wait 10 seconds to allow for any latent iscsi operations to finish, then proceed
-		sleep 10
-		iscsi="0"
-	fi
-done
-
 ## Primary Disk Mounting Function
 data_mount () {
 	echo -e "Mounting /dev/$disk to /data$dcount"
