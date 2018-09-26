@@ -19,3 +19,5 @@ This test is a VirtualBox image running on my laptop.
 * Oracle Linux 7.5.0.0.0 x86 64-bit
 * V975363-01.iso Oracle Linux Release 7 Update 5 Boot ISO image for x86 (64 bit), 540.0 MB
 * Network install with https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64
+
+curl -O https://raw.githubusercontent.com/benofben/oci-performance-test/master/vm/setup.sh
