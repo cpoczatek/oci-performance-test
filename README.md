@@ -28,3 +28,6 @@ Then SSH to the machine using the value from the Terraform output and run:
     cd /
     sudo su
     ./runtest.sh
+
+## September 25, 2018
+I wasn't thinking and was just using the boot volume for these tests.  I'm going to rerun with the local drive and modify the repo appropriately.
