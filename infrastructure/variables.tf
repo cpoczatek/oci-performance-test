@@ -9,11 +9,12 @@ variable "region" {}
 variable "ssh_public_key" {}
 
 variable "shape" {
-  default = "VM.DenseIO1.8"
+  #default = "VM.DenseIO1.8"
   #default = "VM.DenseIO1.16"
   #default = "VM.DenseIO2.8"
   #default = "VM.DenseIO2.16"
   #default = "BM.Standard1.36"
+  default = "BM.DenseIO2.52"
 }
 
 // https://docs.cloud.oracle.com/iaas/images/image/cf34ce27-e82d-4c1a-93e6-e55103f90164/
