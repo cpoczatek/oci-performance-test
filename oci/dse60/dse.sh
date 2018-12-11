@@ -36,11 +36,19 @@ yum -y localinstall ~/jdk8.rpm
 #######################################################
 echo "Formatting the drives..."
 
-dcount=$(cat /proc/partitions | grep -iv sda | sed 1,2d | gawk '{print $4}' | gawk '{print $1}')
+dcount=$(cat /proc/partitions | grep -iv sda | sed 1,2d | gawk '{print $4}' | wc | gawk '{print $1}')
 
-# RAID 0 of 3 disks
-mdadm --create --verbose --force --run /dev/md1 --level=0 \
-  --raid-devices=3 /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1
+# RAID 0 of 3 disks, if available, otherwise 2
+# This is assuming we have at least 2 disks
+if [ "$dcount" -ge 3 ]; then
+  mdadm --create --verbose --force --run /dev/md1 --level=0 \
+    --raid-devices=3 /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1
+fi
+
+if [ "$dcount" -eq 2 ]; then
+  mdadm --create --verbose --force --run /dev/md1 --level=0 \
+    --raid-devices=2 /dev/nvme0n1 /dev/nvme1n1
+fi
 
 mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 /dev/md1
 mkdir /data
@@ -104,7 +112,8 @@ cat $file \
 | sed -e "s:[# ]*\(listen_address\:\).*:listen_address\: $listen_address:" \
 | sed -e "s:[# ]*\(broadcast_address\:\).*:broadcast_address\: $broadcast_address:" \
 | sed -e "s:[# ]*\(rpc_address\:\).*:rpc_address\: $rpc_address:" \
-| sed -e "s:[# ]*\(broadcast_rpc_address\:\).*:broadcast_rpc_address\: $broadcast_rpc_address:" \
+| sed -e "s:[# ]*\(native_transport_address\:\).*:native_transport_address\: $broadcast_address:" \
+| sed -e "s:[# ]*\(native_transport_broadcast_address\:\).*:native_transport_broadcast_address\: $broadcast_rpc_address:" \
 | sed -e "s:.*\(endpoint_snitch\:\).*:endpoint_snitch\: $endpoint_snitch:" \
 | sed -e "s:.*\(num_tokens\:\).*:\1 $num_tokens:" \
 | sed -e "s:\(.*- \)/var/lib/cassandra/data.*:\1$data_file_directories:" \
