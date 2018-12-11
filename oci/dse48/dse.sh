@@ -36,6 +36,8 @@ yum -y localinstall ~/jdk8.rpm
 #######################################################
 echo "Formatting the drives..."
 
+dcount=$(cat /proc/partitions | grep -iv sda | sed 1,2d | gawk '{print $4}' | gawk '{print $1}')
+
 # RAID 0 of 3 disks
 mdadm --create --verbose --force --run /dev/md1 --level=0 \
   --raid-devices=3 /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1
@@ -58,19 +60,6 @@ enabled=1
 gpgcheck=0" > /etc/yum.repos.d/datastax.repo
 yum -y install dse-full-4.8.15-1
 
-# Create the data and commitlog directories
-mkdir -p /data0/cassandra/data
-chown -R cassandra /data0/cassandra/data
-chgrp -R cassandra /data0/cassandra/data
-
-mkdir -p /data0/cassandra/commitlog
-chown -R cassandra /data0/cassandra/commitlog
-chgrp -R cassandra /data0/cassandra/commitlog
-
-mkdir -p /data0/cassandra/saved_caches
-chown -R cassandra /data0/cassandra/saved_caches
-chgrp -R cassandra /data0/cassandra/saved_caches
-
 # sed over yamls
 node_ip=$(hostname -I)
 node_broadcast_ip=$node_ip
@@ -89,6 +78,19 @@ commitlog_directory="/data/cassandra/commitlog"
 saved_caches_directory="/data/cassandra/saved_caches"
 phi_convict_threshold=12
 auto_bootstrap="false"
+
+# Create the data and commitlog directories
+mkdir -p $data_file_directories
+chown -R cassandra $data_file_directories
+chgrp -R cassandra $data_file_directories
+
+mkdir -p $commitlog_directory
+chown -R cassandra $commitlog_directory
+chgrp -R cassandra $commitlog_directory
+
+mkdir -p $saved_caches_directory
+chown -R cassandra $saved_caches_directory
+chgrp -R cassandra $saved_caches_directory
 
 file=/etc/dse/cassandra/cassandra.yaml
 
