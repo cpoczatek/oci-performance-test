@@ -36,12 +36,32 @@ yum -y localinstall ~/jdk8.rpm
 #######################################################
 echo "Formatting the drives..."
 
-#to fill, mount/raid block 
+# find/login/raid/mount block
+
+for n in $(seq 2 9); do
+  iqn=$(iscsiadm -m discovery -t sendtargets -p 169.254.2.$n:3260 | awk '{print $2}')
+  if  [[ $iqn != iqn.* ]] ;
+  then
+    echo "Error: unexpected iqn value: $iqn"
+    continue
+  fi
+  iscsiadm -m node -o update -T $iqn -n node.startup -v automatic
+  iscsiadm -m node -T $iqn -p 169.254.2.$n:3260 -l
+done
+
+# use **all** iscsi disks to build raid 
+disks=$(ls /dev/disk/by-path/ip-169.254*)
+
+mdadm --create --verbose --force --run /dev/md0 --level=0 \
+  --raid-devices=8 \
+  $disks
+
+mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 /dev/md1
 
 mkdir /data
-mount -t ext4 -o noatime /dev/md1 /data
-UUID=$(lsblk -no UUID /dev/md1)
-echo "UUID=$UUID   /data    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
+mount -t ext4 -o noatime /dev/md0 /data
+UUID=$(lsblk -no UUID /dev/md0)
+echo "UUID=$UUID   /data    ext4   defaults,noatime,_netdev,nofail,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
 
 #######################################################
 ####################### DataStax ######################
@@ -53,6 +73,7 @@ name = DataStax Repository
 baseurl=https://datastax%40oracle.com:*9En9HH4j^p4@rpm.datastax.com/enterprise
 enabled=1
 gpgcheck=0" > /etc/yum.repos.d/datastax.repo
+#yum -y install dse-full-4.8.15-1
 yum install libaio
 yum -y install dse-full-6.0.4-1
 
@@ -93,6 +114,9 @@ file=/etc/dse/cassandra/cassandra.yaml
 date=$(date +%F)
 backup="$file.$date"
 cp $file $backup
+
+# for 4.8
+#| sed -e "s:[# ]*\(broadcast_rpc_address\:\).*:broadcast_rpc_address\: $broadcast_rpc_address:" \
 
 cat $file \
 | sed -e "s:\(.*- *seeds\:\).*:\1 \"$seeds\":" \
