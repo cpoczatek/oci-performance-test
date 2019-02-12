@@ -18,7 +18,7 @@ resource "oci_core_instance" "dse" {
     ssh_authorized_keys = "${var.ssh_public_key}"
     user_data           = "${base64encode(join("\n", list(
       "#!/usr/bin/env bash",
-      file("./dse.sh")
+      file("./cstar.sh")
     )))}"
   }
   count = "${var.dse["node_count"]}"
