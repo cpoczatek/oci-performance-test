@@ -36,6 +36,36 @@ yum -y localinstall ~/jdk8.rpm
 #######################################################
 echo "Formatting the drives..."
 
+#############################################
+success=1
+while [[ $success -eq 1 ]]; do
+  iqn=$(iscsiadm -m discovery -t sendtargets -p 169.254.2.2:3260 | awk '{print $2}')
+  if  [[ $iqn != iqn.* ]] ;
+  then
+    echo "Error: unexpected iqn value: $iqn, sleeping 10s before retry..."
+    sleep 10s
+    continue
+  else
+    echo "Success for iqn: $iqn"
+    success=0
+  fi
+done
+iscsiadm -m node -o update -T $iqn -n node.startup -v automatic
+iscsiadm -m node -T $iqn -p 169.254.2.2:3260 -l
+
+# mdadm raid possible here, currently hard coded to use sdb
+mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 /dev/sdb
+mkdir /data
+mount -t ext4 -o noatime /dev/sdb /data
+UUID=$(lsblk -no UUID /dev/sdb)
+echo "UUID=$UUID   /data    ext4   defaults,noatime,_netdev,nofail,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
+
+exit 0
+#############################################
+
+#echo "Sleeping 10m..."
+#sleep 10m
+
 # find/login/raid/mount block
 
 for n in $(seq 2 9); do
@@ -49,14 +79,19 @@ for n in $(seq 2 9); do
   iscsiadm -m node -T $iqn -p 169.254.2.$n:3260 -l
 done
 
+#echo "Sleeping 3s..."
+sleep 3s
+
 # use **all** iscsi disks to build raid
 disks=$(ls /dev/disk/by-path/ip-169.254*)
+echo "Block disks found: $disks"
+echo "Count: $(echo $disks | wc -w)"
 
 mdadm --create --verbose --force --run /dev/md0 --level=0 \
   --raid-devices=8 \
   $disks
 
-mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 /dev/md1
+mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 /dev/md0
 
 mkdir /data
 mount -t ext4 -o noatime /dev/md0 /data
@@ -82,7 +117,7 @@ sudo yum -y install cassandra
 node_ip=$(hostname -I)
 node_broadcast_ip=$node_ip
 
-seeds=$(dig +short dse-0.datastax.datastax.oraclevcn.com)
+seeds=$(dig +short node-0.datastax.datastax.oraclevcn.com)
 
 listen_address=$node_ip
 broadcast_address=$node_broadcast_ip
@@ -90,7 +125,7 @@ rpc_address="0.0.0.0"
 broadcast_rpc_address=$node_broadcast_ip
 
 endpoint_snitch="GossipingPropertyFileSnitch"
-num_tokens=8
+num_tokens=32
 data_file_directories="/data/cassandra/data"
 commitlog_directory="/data/cassandra/commitlog"
 saved_caches_directory="/data/cassandra/saved_caches"

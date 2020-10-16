@@ -1,7 +1,8 @@
 resource "oci_core_instance" "dse" {
-  display_name        = "node-${count.index}"
+  display_name        = "bare-${count.index}"
   compartment_id      = "${var.compartment_ocid}"
-  availability_domain = "${lookup(data.oci_identity_availability_domains.availability_domains.availability_domains[0],"name")}"
+  availability_domain = "YVsm:US-ASHBURN-AD-2"
+#"${lookup(data.oci_identity_availability_domains.availability_domains.availability_domains[1],"name")}"
   shape               = "${var.dse["shape"]}"
   subnet_id           = "${oci_core_subnet.subnet.id}"
   source_details {
@@ -11,7 +12,7 @@ resource "oci_core_instance" "dse" {
 
   create_vnic_details {
         subnet_id = "${oci_core_subnet.subnet.id}"
-        hostname_label = "node-${count.index}"
+        hostname_label = "dse-${count.index}"
   }
 
   metadata {

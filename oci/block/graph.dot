@@ -1,0 +1,105 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] data.oci_identity_availability_domains.availability_domains" [label = "data.oci_identity_availability_domains.availability_domains", shape = "box"]
+		"[root] oci_core_instance.dse" [label = "oci_core_instance.dse", shape = "box"]
+		"[root] oci_core_internet_gateway.internet_gateway" [label = "oci_core_internet_gateway.internet_gateway", shape = "box"]
+		"[root] oci_core_route_table.route_table" [label = "oci_core_route_table.route_table", shape = "box"]
+		"[root] oci_core_security_list.security_list" [label = "oci_core_security_list.security_list", shape = "box"]
+		"[root] oci_core_subnet.subnet" [label = "oci_core_subnet.subnet", shape = "box"]
+		"[root] oci_core_virtual_network.virtual_network" [label = "oci_core_virtual_network.virtual_network", shape = "box"]
+		"[root] oci_core_volume.NodeVolume1" [label = "oci_core_volume.NodeVolume1", shape = "box"]
+		"[root] oci_core_volume.NodeVolume2" [label = "oci_core_volume.NodeVolume2", shape = "box"]
+		"[root] oci_core_volume.NodeVolume3" [label = "oci_core_volume.NodeVolume3", shape = "box"]
+		"[root] oci_core_volume.NodeVolume4" [label = "oci_core_volume.NodeVolume4", shape = "box"]
+		"[root] oci_core_volume.NodeVolume5" [label = "oci_core_volume.NodeVolume5", shape = "box"]
+		"[root] oci_core_volume.NodeVolume6" [label = "oci_core_volume.NodeVolume6", shape = "box"]
+		"[root] oci_core_volume.NodeVolume7" [label = "oci_core_volume.NodeVolume7", shape = "box"]
+		"[root] oci_core_volume.NodeVolume8" [label = "oci_core_volume.NodeVolume8", shape = "box"]
+		"[root] oci_core_volume_attachment.NodeAttachment1" [label = "oci_core_volume_attachment.NodeAttachment1", shape = "box"]
+		"[root] oci_core_volume_attachment.NodeAttachment2" [label = "oci_core_volume_attachment.NodeAttachment2", shape = "box"]
+		"[root] oci_core_volume_attachment.NodeAttachment3" [label = "oci_core_volume_attachment.NodeAttachment3", shape = "box"]
+		"[root] oci_core_volume_attachment.NodeAttachment4" [label = "oci_core_volume_attachment.NodeAttachment4", shape = "box"]
+		"[root] oci_core_volume_attachment.NodeAttachment5" [label = "oci_core_volume_attachment.NodeAttachment5", shape = "box"]
+		"[root] oci_core_volume_attachment.NodeAttachment6" [label = "oci_core_volume_attachment.NodeAttachment6", shape = "box"]
+		"[root] oci_core_volume_attachment.NodeAttachment7" [label = "oci_core_volume_attachment.NodeAttachment7", shape = "box"]
+		"[root] oci_core_volume_attachment.NodeAttachment8" [label = "oci_core_volume_attachment.NodeAttachment8", shape = "box"]
+		"[root] provider.oci" [label = "provider.oci", shape = "diamond"]
+		"[root] data.oci_identity_availability_domains.availability_domains" -> "[root] provider.oci"
+		"[root] data.oci_identity_availability_domains.availability_domains" -> "[root] var.compartment_ocid"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] oci_core_volume_attachment.NodeAttachment1"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] oci_core_volume_attachment.NodeAttachment2"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] oci_core_volume_attachment.NodeAttachment3"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] oci_core_volume_attachment.NodeAttachment4"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] oci_core_volume_attachment.NodeAttachment5"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] oci_core_volume_attachment.NodeAttachment6"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] oci_core_volume_attachment.NodeAttachment7"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] oci_core_volume_attachment.NodeAttachment8"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] output.Node private IPs"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] output.Node public IPs"
+		"[root] meta.count-boundary (count boundary fixup)" -> "[root] var.ssh_private_key"
+		"[root] oci_core_instance.dse" -> "[root] oci_core_subnet.subnet"
+		"[root] oci_core_instance.dse" -> "[root] var.dse"
+		"[root] oci_core_instance.dse" -> "[root] var.images"
+		"[root] oci_core_instance.dse" -> "[root] var.ssh_public_key"
+		"[root] oci_core_internet_gateway.internet_gateway" -> "[root] oci_core_virtual_network.virtual_network"
+		"[root] oci_core_route_table.route_table" -> "[root] oci_core_internet_gateway.internet_gateway"
+		"[root] oci_core_security_list.security_list" -> "[root] oci_core_virtual_network.virtual_network"
+		"[root] oci_core_subnet.subnet" -> "[root] data.oci_identity_availability_domains.availability_domains"
+		"[root] oci_core_subnet.subnet" -> "[root] oci_core_route_table.route_table"
+		"[root] oci_core_subnet.subnet" -> "[root] oci_core_security_list.security_list"
+		"[root] oci_core_virtual_network.virtual_network" -> "[root] provider.oci"
+		"[root] oci_core_virtual_network.virtual_network" -> "[root] var.compartment_ocid"
+		"[root] oci_core_volume.NodeVolume1" -> "[root] data.oci_identity_availability_domains.availability_domains"
+		"[root] oci_core_volume.NodeVolume1" -> "[root] var.dse"
+		"[root] oci_core_volume.NodeVolume2" -> "[root] data.oci_identity_availability_domains.availability_domains"
+		"[root] oci_core_volume.NodeVolume2" -> "[root] var.dse"
+		"[root] oci_core_volume.NodeVolume3" -> "[root] data.oci_identity_availability_domains.availability_domains"
+		"[root] oci_core_volume.NodeVolume3" -> "[root] var.dse"
+		"[root] oci_core_volume.NodeVolume4" -> "[root] data.oci_identity_availability_domains.availability_domains"
+		"[root] oci_core_volume.NodeVolume4" -> "[root] var.dse"
+		"[root] oci_core_volume.NodeVolume5" -> "[root] data.oci_identity_availability_domains.availability_domains"
+		"[root] oci_core_volume.NodeVolume5" -> "[root] var.dse"
+		"[root] oci_core_volume.NodeVolume6" -> "[root] data.oci_identity_availability_domains.availability_domains"
+		"[root] oci_core_volume.NodeVolume6" -> "[root] var.dse"
+		"[root] oci_core_volume.NodeVolume7" -> "[root] data.oci_identity_availability_domains.availability_domains"
+		"[root] oci_core_volume.NodeVolume7" -> "[root] var.dse"
+		"[root] oci_core_volume.NodeVolume8" -> "[root] data.oci_identity_availability_domains.availability_domains"
+		"[root] oci_core_volume.NodeVolume8" -> "[root] var.dse"
+		"[root] oci_core_volume_attachment.NodeAttachment1" -> "[root] oci_core_instance.dse"
+		"[root] oci_core_volume_attachment.NodeAttachment1" -> "[root] oci_core_volume.NodeVolume1"
+		"[root] oci_core_volume_attachment.NodeAttachment2" -> "[root] oci_core_instance.dse"
+		"[root] oci_core_volume_attachment.NodeAttachment2" -> "[root] oci_core_volume.NodeVolume2"
+		"[root] oci_core_volume_attachment.NodeAttachment3" -> "[root] oci_core_instance.dse"
+		"[root] oci_core_volume_attachment.NodeAttachment3" -> "[root] oci_core_volume.NodeVolume3"
+		"[root] oci_core_volume_attachment.NodeAttachment4" -> "[root] oci_core_instance.dse"
+		"[root] oci_core_volume_attachment.NodeAttachment4" -> "[root] oci_core_volume.NodeVolume4"
+		"[root] oci_core_volume_attachment.NodeAttachment5" -> "[root] oci_core_instance.dse"
+		"[root] oci_core_volume_attachment.NodeAttachment5" -> "[root] oci_core_volume.NodeVolume5"
+		"[root] oci_core_volume_attachment.NodeAttachment6" -> "[root] oci_core_instance.dse"
+		"[root] oci_core_volume_attachment.NodeAttachment6" -> "[root] oci_core_volume.NodeVolume6"
+		"[root] oci_core_volume_attachment.NodeAttachment7" -> "[root] oci_core_instance.dse"
+		"[root] oci_core_volume_attachment.NodeAttachment7" -> "[root] oci_core_volume.NodeVolume7"
+		"[root] oci_core_volume_attachment.NodeAttachment8" -> "[root] oci_core_instance.dse"
+		"[root] oci_core_volume_attachment.NodeAttachment8" -> "[root] oci_core_volume.NodeVolume8"
+		"[root] output.Node private IPs" -> "[root] oci_core_instance.dse"
+		"[root] output.Node public IPs" -> "[root] oci_core_instance.dse"
+		"[root] provider.oci (close)" -> "[root] oci_core_volume_attachment.NodeAttachment1"
+		"[root] provider.oci (close)" -> "[root] oci_core_volume_attachment.NodeAttachment2"
+		"[root] provider.oci (close)" -> "[root] oci_core_volume_attachment.NodeAttachment3"
+		"[root] provider.oci (close)" -> "[root] oci_core_volume_attachment.NodeAttachment4"
+		"[root] provider.oci (close)" -> "[root] oci_core_volume_attachment.NodeAttachment5"
+		"[root] provider.oci (close)" -> "[root] oci_core_volume_attachment.NodeAttachment6"
+		"[root] provider.oci (close)" -> "[root] oci_core_volume_attachment.NodeAttachment7"
+		"[root] provider.oci (close)" -> "[root] oci_core_volume_attachment.NodeAttachment8"
+		"[root] provider.oci" -> "[root] var.fingerprint"
+		"[root] provider.oci" -> "[root] var.private_key_path"
+		"[root] provider.oci" -> "[root] var.region"
+		"[root] provider.oci" -> "[root] var.tenancy_ocid"
+		"[root] provider.oci" -> "[root] var.user_ocid"
+		"[root] root" -> "[root] meta.count-boundary (count boundary fixup)"
+		"[root] root" -> "[root] provider.oci (close)"
+	}
+}
+

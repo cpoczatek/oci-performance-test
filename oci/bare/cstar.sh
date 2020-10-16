@@ -40,33 +40,36 @@ dcount=$(cat /proc/partitions | grep -iv sda | sed 1,2d | gawk '{print $4}' | wc
 
 # RAID 0 of 3 disks, if available, otherwise 2
 # This is assuming we have at least 2 disks
-if [ "$dcount" -ge 3 ]; then
-  mdadm --create --verbose --force --run /dev/md1 --level=0 \
-    --raid-devices=3 /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1
-fi
+#if [ "$dcount" -ge 3 ]; then
+#  mdadm --create --verbose --force --run /dev/md1 --level=0 \
+#    --raid-devices=3 /dev/nvme0n1 /dev/nvme1n1 /dev/nvme2n1
+#fi
 
-if [ "$dcount" -eq 2 ]; then
-  mdadm --create --verbose --force --run /dev/md1 --level=0 \
-    --raid-devices=2 /dev/nvme0n1 /dev/nvme1n1
-fi
+#if [ "$dcount" -eq 2 ]; then
+#  mdadm --create --verbose --force --run /dev/md1 --level=0 \
+#    --raid-devices=2 /dev/nvme0n1 /dev/nvme1n1
+#fi
 
-mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 /dev/md1
+mke2fs -F -t ext4 -b 4096 -E lazy_itable_init=1 -O sparse_super,dir_index,extent,has_journal,uninit_bg -m1 /dev/nvme0n1
 mkdir /data
-mount -t ext4 -o noatime /dev/md1 /data
-UUID=$(lsblk -no UUID /dev/md1)
+mount -t ext4 -o noatime /dev/nvme0n1 /data
+UUID=$(lsblk -no UUID /dev/nvme0n1)
 echo "UUID=$UUID   /data    ext4   defaults,noatime,discard,barrier=0 0 1" | sudo tee -a /etc/fstab
 
 #######################################################
 ####################### DataStax ######################
 #######################################################
-echo "Installing DataStax..."
+echo "Installing Cassandra..."
 
-echo "[datastax]
-name = DataStax Repository
-baseurl=https://datastax%40oracle.com:*9En9HH4j^p4@rpm.datastax.com/enterprise
-enabled=1
-gpgcheck=0" > /etc/yum.repos.d/datastax.repo
-yum -y install dse-full-4.8.15-1
+# replace 311x with 21x for 2.1.x
+echo "[cassandra]
+name=Apache Cassandra
+baseurl=https://www.apache.org/dist/cassandra/redhat/311x/
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://www.apache.org/dist/cassandra/KEYS" | \
+  sudo tee -a /etc/yum.repos.d/cassandra.repo
+sudo yum -y install cassandra
 
 # sed over yamls
 node_ip=$(hostname -I)
@@ -80,7 +83,7 @@ rpc_address="0.0.0.0"
 broadcast_rpc_address=$node_broadcast_ip
 
 endpoint_snitch="GossipingPropertyFileSnitch"
-num_tokens=8
+num_tokens=32
 data_file_directories="/data/cassandra/data"
 commitlog_directory="/data/cassandra/commitlog"
 saved_caches_directory="/data/cassandra/saved_caches"
@@ -100,7 +103,7 @@ mkdir -p $saved_caches_directory
 chown -R cassandra $saved_caches_directory
 chgrp -R cassandra $saved_caches_directory
 
-file=/etc/dse/cassandra/cassandra.yaml
+file=/etc/cassandra/default.conf/cassandra.yaml
 
 date=$(date +%F)
 backup="$file.$date"
@@ -129,7 +132,7 @@ mv $file.new $file
 chown cassandra $file
 chgrp cassandra $file
 
-service dse start
+service cassandra start
 
 #######################################################
 ########################## Test #######################

@@ -2,8 +2,8 @@
 
 echo "Running dse.sh"
 
-echo "Disabling IBRS"
-echo 0 > /sys/kernel/debug/x86/ibrs_enabled
+#echo "Disabling IBRS"
+#echo 0 > /sys/kernel/debug/x86/ibrs_enabled
 
 #######################################################
 ################# Turn Off the Firewall ###############
